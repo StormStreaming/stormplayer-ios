@@ -6,28 +6,29 @@
 
 import SwiftUI
 import os.log
-import StormLibrary
 
 public struct StormPlayerView : View{
     
-    let stormLibrary : StormLibrary
+    public let stormPlayer : StormPlayer
     
-    public init(stormLibrary : StormLibrary){
-        self.stormLibrary = stormLibrary
+    public init(stormPlayer : StormPlayer){
+        self.stormPlayer = stormPlayer
     }
     
     public var body: some View {
         VStack {
-            AVPlayerView(player: stormLibrary.avPlayer)
-            StormPlayerControlsView(stormLibrary: stormLibrary)
+            AVPlayerView(player: stormPlayer.stormLibrary.avPlayer)
+            StormPlayerControlsView(stormPlayer: stormPlayer)
         }.onAppear{
 
             do{
-                try stormLibrary.prepare()
+                try stormPlayer.stormLibrary.prepare()
             }catch let error as NSError {
                 os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
             }
             
         }
-      }
+    }
+    
+   
 }

@@ -12,7 +12,7 @@ import StormLibrary
 
 struct StormPlayerControlsView : View{
     
-    let stormLibrary : StormLibrary
+    let stormPlayer : StormPlayer
     
     let playPauseString = NSLocalizedString("playpause", bundle: .module, comment: "x")
     
@@ -27,21 +27,25 @@ struct StormPlayerControlsView : View{
         
         Button(playPauseString){
             
-            if !stormLibrary.isPlaying{
+            if !stormPlayer.stormLibrary.isPlaying{
                 
                 do{
-                 try stormLibrary.play()
+                    try stormPlayer.stormLibrary.play()
                 } catch let error as NSError {
                     os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
                 }
+                
+                stormPlayer.dispatchEvent(.playClicked)
+               
             }else{
-                stormLibrary.pause()
+                stormPlayer.stormLibrary.pause()
+                stormPlayer.dispatchEvent(.testWithObject, object: "przekazuje wiadomosc :D")
             }
         }
         
         
         Button("Stop"){
-            stormLibrary.stop()
+            stormPlayer.stormLibrary.stop()
         }
 
         ProgressBar(value: $seekPos).padding(20)
