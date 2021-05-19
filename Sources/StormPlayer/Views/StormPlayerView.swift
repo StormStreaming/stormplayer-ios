@@ -11,14 +11,15 @@ public struct StormPlayerView : View{
     
     public let stormPlayer : StormPlayer
     
+
     public init(stormPlayer : StormPlayer){
         self.stormPlayer = stormPlayer
     }
     
     public var body: some View {
-        VStack {
+        ZStack(alignment: .bottom){
             AVPlayerView(player: stormPlayer.stormLibrary.avPlayer)
-            StormPlayerControlsView(stormPlayer: stormPlayer)
+            ControlsView(stormPlayer: stormPlayer)
         }.onAppear{
 
             do{
@@ -26,8 +27,10 @@ public struct StormPlayerView : View{
             }catch let error as NSError {
                 os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
             }
-            
         }
+        .environmentObject(stormPlayer.playerViewState!)
+        
+        
     }
     
    

@@ -8,7 +8,7 @@
 import StormLibrary
 import os.log
 
-class StormPlayerController : StormPlayerViewObserver{
+class LibraryController : PlayerViewObserver{
     
     let stormPlayer : StormPlayer
     

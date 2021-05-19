@@ -6,36 +6,36 @@
 //
 
 import StormLibrary
+import SwiftUI
 
 public class StormPlayer{
     
     public let stormLibrary : StormLibrary
     
-    private var stormPlayerController : StormPlayerController?
+    private var libraryController : LibraryController?
     private var observations = [ObjectIdentifier : Observation]()
+    
+    public var playerViewState : PlayerViewState?
     
     public init(stormLibrary: StormLibrary){
         self.stormLibrary = stormLibrary
-        self.stormPlayerController = StormPlayerController(stormPlayer: self)
-    }
-    
-    public enum EventType {
-        case onPlayClicked
-        case onPauseClicked
-        case testWithObject
+        self.libraryController = LibraryController(stormPlayer: self)
+        self.playerViewState = PlayerViewState(stormPlayer: self);
+
     }
    
-    public func addObserver(_ observer: StormPlayerViewObserver){
+    public func addObserver(_ observer: PlayerViewObserver){
         let id = ObjectIdentifier(observer)
         observations[id] = Observation(observer: observer)
     }
     
-    public func removeObserver(_ observer: StormPlayerViewObserver){
+    public func removeObserver(_ observer: PlayerViewObserver){
         let id = ObjectIdentifier(observer)
         observations.removeValue(forKey: id)
     }
 
     public func dispatchEvent(_ eventType : EventType, object : Any? = nil){
+        
         for (id, observation) in observations {
             
             guard let observer = observation.observer else {
@@ -54,7 +54,7 @@ public class StormPlayer{
     }
     
     public struct Observation {
-        weak var observer: StormPlayerViewObserver?
+        weak var observer: PlayerViewObserver?
     }
     
 }
