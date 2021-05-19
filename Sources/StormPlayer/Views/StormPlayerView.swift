@@ -11,15 +11,13 @@ public struct StormPlayerView : View{
     
     public let stormPlayer : StormPlayer
     
-
     public init(stormPlayer : StormPlayer){
         self.stormPlayer = stormPlayer
     }
     
     public var body: some View {
         ZStack(alignment: .bottom){
-            AVPlayerView(player: stormPlayer.stormLibrary.avPlayer)
-            ControlsView(stormPlayer: stormPlayer)
+            FullscreenGateView(stormPlayer: stormPlayer)
         }.onAppear{
 
             do{
@@ -33,5 +31,6 @@ public struct StormPlayerView : View{
         
     }
     
+
    
 }

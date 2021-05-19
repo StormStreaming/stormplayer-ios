@@ -23,6 +23,14 @@ public class StormPlayer{
         self.playerViewState = PlayerViewState(stormPlayer: self);
 
     }
+    
+    public func enterFullscreen(){
+        dispatchEvent(.onEnterFullscreenClicked)
+    }
+    
+    public func exitFullscreen(){
+        dispatchEvent(.onExitFullscreenClicked)
+    }
    
     public func addObserver(_ observer: PlayerViewObserver){
         let id = ObjectIdentifier(observer)
@@ -47,6 +55,10 @@ public class StormPlayer{
                     observer.onPlayClicked()
                 case .onPauseClicked:
                     observer.onPauseClicked()
+                case .onEnterFullscreenClicked:
+                    observer.onEnterFullscreenClicked()
+                case .onExitFullscreenClicked:
+                    observer.onExitFullscreenClicked()
                 case .testWithObject:
                     observer.testWithObject((object as? String)!)
             }

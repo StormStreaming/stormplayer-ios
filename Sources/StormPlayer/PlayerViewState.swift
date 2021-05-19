@@ -12,8 +12,9 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver{
     let stormPlayer : StormPlayer
     
     @Published var isGuiVisible = true
-    @Published var isProgressBarVisible = true
+    @Published var isFullscreenMode = false
     @Published var error : String?
+    
     
     public init(stormPlayer : StormPlayer){
         self.stormPlayer = stormPlayer
@@ -21,14 +22,23 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver{
     }
     
     public func onPlayClicked(){
-        error = "asd"
+        //isFullscreenMode = true
         //print("powinno zniknac ://///")
         //isGuiVisible = false
     }
     
     public func onPauseClicked(){
-        error = nil
+        
         //print("powinno zniknac ://///")
         //isGuiVisible = false
+    }
+    
+    public func onEnterFullscreenClicked() {
+        print("odpalilem enter")
+        isFullscreenMode = true
+    }
+    
+    public func onExitFullscreenClicked() {
+        isFullscreenMode = false
     }
 }

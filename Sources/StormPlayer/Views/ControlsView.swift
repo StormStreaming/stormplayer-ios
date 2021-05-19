@@ -20,6 +20,9 @@ struct ControlsView : View{
 
     var body: some View {
         
+        /*
+         Error Screen
+         */
         if playerViewState.error != nil{
             Text("Error: \(playerViewState.error!)").foregroundColor(.white)
         }
@@ -42,18 +45,18 @@ struct ControlsView : View{
                             stormPlayer.dispatchEvent(.onPauseClicked)
                             //stormPlayer.dispatchEvent(.testWithObject, object: "przekazuje wiadomosc :D")
                         }
-                    }.padding(.trailing, 20)
+                    }
+                    Button("Fullscreen"){
+                        if playerViewState.isFullscreenMode{
+                            stormPlayer.dispatchEvent(.onExitFullscreenClicked)
+                        }else{
+                            stormPlayer.dispatchEvent(.onEnterFullscreenClicked)
+                        }
+                    }
+                    .padding(.trailing, 20)
                 }
             
-            
-            //Button("Stop"){
-            //    stormPlayer.stormLibrary.stop()
-            //}
-            if playerViewState.isProgressBarVisible{
                 ProgressBar(value: $seekPos).padding(20)
-            }
-            //Slider(value: $seekPos, onEditingChanged: { _ in
-            //})
             }
         }
         

@@ -14,7 +14,7 @@ struct AVPlayerView: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<AVPlayerView>) -> AVPlayerViewController{
         let controller = AVPlayerViewController()
         controller.player = player
-        //controller.showsPlaybackControls = false
+        controller.showsPlaybackControls = false
         return controller;
     }
     
