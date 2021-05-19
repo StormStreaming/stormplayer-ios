@@ -7,7 +7,6 @@
 
 import SwiftUI
 import AVKit
-import os.log
 import StormLibrary
 
 struct StormPlayerControlsView : View{
@@ -28,25 +27,17 @@ struct StormPlayerControlsView : View{
         Button(playPauseString){
             
             if !stormPlayer.stormLibrary.isPlaying{
-                
-                do{
-                    try stormPlayer.stormLibrary.play()
-                } catch let error as NSError {
-                    os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
-                }
-                
-                stormPlayer.dispatchEvent(.playClicked)
-               
+                stormPlayer.dispatchEvent(.onPlayClicked)
             }else{
-                stormPlayer.stormLibrary.pause()
-                stormPlayer.dispatchEvent(.testWithObject, object: "przekazuje wiadomosc :D")
+                stormPlayer.dispatchEvent(.onPauseClicked)
+                //stormPlayer.dispatchEvent(.testWithObject, object: "przekazuje wiadomosc :D")
             }
         }
         
         
-        Button("Stop"){
-            stormPlayer.stormLibrary.stop()
-        }
+        //Button("Stop"){
+        //    stormPlayer.stormLibrary.stop()
+        //}
 
         ProgressBar(value: $seekPos).padding(20)
         

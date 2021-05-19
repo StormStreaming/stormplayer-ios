@@ -10,14 +10,18 @@ import StormLibrary
 public class StormPlayer{
     
     public let stormLibrary : StormLibrary
+    
+    private var stormPlayerController : StormPlayerController?
     private var observations = [ObjectIdentifier : Observation]()
     
     public init(stormLibrary: StormLibrary){
         self.stormLibrary = stormLibrary
+        self.stormPlayerController = StormPlayerController(stormPlayer: self)
     }
     
     public enum EventType {
-        case playClicked
+        case onPlayClicked
+        case onPauseClicked
         case testWithObject
     }
    
@@ -38,10 +42,11 @@ public class StormPlayer{
                 observations.removeValue(forKey: id)
                 continue
             }
-            print("coś tutaj mamy2")
             switch eventType {
-                case .playClicked:
-                    observer.playClicked()
+                case .onPlayClicked:
+                    observer.onPlayClicked()
+                case .onPauseClicked:
+                    observer.onPauseClicked()
                 case .testWithObject:
                     observer.testWithObject((object as? String)!)
             }
