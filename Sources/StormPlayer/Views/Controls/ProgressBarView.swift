@@ -1,5 +1,5 @@
 //
-//  ProgressBar.swift
+//  ProgressBarView.swift
 //  MyThirdApp
 //
 //  Created by Sebastian Ceglarz on 17/05/2021.
@@ -8,16 +8,16 @@
 import SwiftUI
 
 
-struct ProgressBar : UIViewRepresentable{
+struct ProgressBarView : UIViewRepresentable{
     
-    func makeCoordinator() -> ProgressBar.Coordinator {
-        return ProgressBar.Coordinator(parent1: self)
+    func makeCoordinator() -> ProgressBarView.Coordinator {
+        return ProgressBarView.Coordinator(parent1: self)
     }
     
     @Binding var value : Float
-    let stormSlider = StormUISlider()
+    let stormSlider = StormUISliderView()
     
-    func makeUIView(context: UIViewRepresentableContext<ProgressBar>) -> UISlider {
+    func makeUIView(context: UIViewRepresentableContext<ProgressBarView>) -> UISlider {
         
     
         stormSlider.minimumTrackTintColor = UIColor(Color("StormOrange", bundle: .module))
@@ -34,21 +34,21 @@ struct ProgressBar : UIViewRepresentable{
         return stormSlider
     }
     
-    func updateUIView(_ uiView: UISlider, context: UIViewRepresentableContext<ProgressBar>) {
+    func updateUIView(_ uiView: UISlider, context: UIViewRepresentableContext<ProgressBarView>) {
         
         uiView.value = value
     }
     
     class Coordinator : NSObject{
         
-        var parent : ProgressBar
+        var parent : ProgressBarView
         
-        init(parent1 : ProgressBar) {
+        init(parent1 : ProgressBarView) {
             
             parent = parent1
         }
         
-        @objc func changed(slider : StormUISlider){
+        @objc func changed(slider : StormUISliderView){
             print("value: \(slider.value)")
             
             slider.showTooltip()
@@ -62,7 +62,7 @@ struct ProgressBar : UIViewRepresentable{
             
         }
         
-        @objc func sliderDidEndSliding(slider : StormUISlider) {
+        @objc func sliderDidEndSliding(slider : StormUISliderView) {
             slider.hideTooltip()
         }
     }

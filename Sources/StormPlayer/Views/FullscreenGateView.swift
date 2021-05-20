@@ -10,22 +10,20 @@ import SwiftUI
 
 struct FullscreenGateView : View{
     
-    public let stormPlayer : StormPlayer
-    
+
     @EnvironmentObject var playerViewState: PlayerViewState
-
-    public init(stormPlayer : StormPlayer){
-        self.stormPlayer = stormPlayer
-
-    }
 
     var body: some View {
         
         ZStack(alignment: .bottom){
-            AVPlayerView(player: stormPlayer.stormLibrary.avPlayer)
-            ControlsView(stormPlayer: stormPlayer)
+            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.avPlayer).onTapGesture {
+                playerViewState.stormPlayer.dispatchEvent(.onVideoClicked)
+            }
+            if playerViewState.isGuiVisible{
+                ControlsView()
+            }
         }.fullScreenCover(isPresented: playerViewState.isFullscreenMode ? .constant(true) : .constant(false)){
-            FullscreenView(stormPlayer: stormPlayer)
+            FullscreenView()
         }
         
     }
@@ -34,18 +32,12 @@ struct FullscreenGateView : View{
 
 struct FullscreenView: View {
     
-    public let stormPlayer : StormPlayer
+    @EnvironmentObject var playerViewState: PlayerViewState
     
-
-    public init(stormPlayer : StormPlayer){
-        self.stormPlayer = stormPlayer
-    }
-    
-    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack(alignment: .bottom){
-            AVPlayerView(player: stormPlayer.stormLibrary.avPlayer)
-            ControlsView(stormPlayer: stormPlayer)
+            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.avPlayer)
+            ControlsView()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)

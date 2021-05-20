@@ -1,5 +1,5 @@
 //
-//  StormUISlider.swift
+//  StormUISliderView.swift
 //
 //  Created by Sebastian Ceglarz on 17/05/2021.
 //
@@ -7,7 +7,7 @@
 import UIKit
 import SwiftUI
 
-class StormUISlider : UISlider {
+class StormUISliderView : UISlider {
     
     private var toolTip: ToolTipPopupView?
     private var point: UIView?

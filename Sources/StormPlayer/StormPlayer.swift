@@ -59,6 +59,8 @@ public class StormPlayer{
                     observer.onEnterFullscreenClicked()
                 case .onExitFullscreenClicked:
                     observer.onExitFullscreenClicked()
+                case .onVideoClicked:
+                    observer.onVideoClicked()
                 case .testWithObject:
                     observer.testWithObject((object as? String)!)
             }

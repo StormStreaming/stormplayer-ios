@@ -10,6 +10,7 @@ public protocol PlayerViewObserver: AnyObject {
     func onPauseClicked()
     func onEnterFullscreenClicked()
     func onExitFullscreenClicked()
+    func onVideoClicked()
     func testWithObject(_ t : String)
 }
 
@@ -18,6 +19,7 @@ public extension PlayerViewObserver {
     func onPauseClicked() {}
     func onEnterFullscreenClicked() {}
     func onExitFullscreenClicked() {}
+    func onVideoClicked() {}
     func testWithObject(_ t : String) {}
 }
 
@@ -27,6 +29,7 @@ public extension StormPlayer{
         case onPauseClicked
         case onEnterFullscreenClicked
         case onExitFullscreenClicked
+        case onVideoClicked
         case testWithObject
     }
 }

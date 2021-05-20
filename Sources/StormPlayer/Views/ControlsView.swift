@@ -13,7 +13,6 @@ struct ControlsView : View{
     
     @EnvironmentObject var playerViewState: PlayerViewState
     
-    let stormPlayer : StormPlayer
     let playPauseString = NSLocalizedString("playpause", bundle: .module, comment: "x")
     
     @State var seekPos : Float = 0
@@ -27,39 +26,30 @@ struct ControlsView : View{
             Text("Error: \(playerViewState.error!)").foregroundColor(.white)
         }
         
-        if playerViewState.error == nil && playerViewState.isGuiVisible{
-            VStack{
-            
-            /*
-             OBRAZEK! :D
-             */
-            //Image("TestImage", bundle: .module)
-            
-                HStack{
-                    Spacer()
-                    Button(playPauseString){
-                        
-                        if !stormPlayer.stormLibrary.isPlaying{
-                            stormPlayer.dispatchEvent(.onPlayClicked)
-                        }else{
-                            stormPlayer.dispatchEvent(.onPauseClicked)
-                            //stormPlayer.dispatchEvent(.testWithObject, object: "przekazuje wiadomosc :D")
-                        }
+        VStack{
+
+            Spacer()
+            PlaybackButtonView()
+            Spacer()
+            if playerViewState.error == nil && playerViewState.isGuiVisible{
+                VStack{
+                
+                /*
+                 OBRAZEK! :D
+                 */
+                //Image("TestImage", bundle: .module)
+                
+                    HStack{
+                        Spacer()
+                        FullScreenButtonView()
+                        .padding(.trailing, 20)
                     }
-                    Button("Fullscreen"){
-                        if playerViewState.isFullscreenMode{
-                            stormPlayer.dispatchEvent(.onExitFullscreenClicked)
-                        }else{
-                            stormPlayer.dispatchEvent(.onEnterFullscreenClicked)
-                        }
-                    }
-                    .padding(.trailing, 20)
+                
+                    ProgressBarView(value: $seekPos).padding(20)
                 }
-            
-                ProgressBar(value: $seekPos).padding(20)
             }
-        }
-        
+        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+            
    
         
     }

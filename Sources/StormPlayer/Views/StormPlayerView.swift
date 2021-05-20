@@ -17,7 +17,7 @@ public struct StormPlayerView : View{
     
     public var body: some View {
         ZStack(alignment: .bottom){
-            FullscreenGateView(stormPlayer: stormPlayer)
+            FullscreenGateView()
         }.onAppear{
 
             do{
