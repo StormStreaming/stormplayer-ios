@@ -18,14 +18,14 @@ public struct StormPlayerView : View{
     public var body: some View {
         ZStack(alignment: .bottom){
             FullscreenGateView()
-        }.onAppear{
+        }/*.onAppear{
 
             do{
                 try stormPlayer.stormLibrary.prepare()
             }catch let error as NSError {
                 os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
             }
-        }
+        }*/
         .environmentObject(stormPlayer.playerViewState!)
         
         

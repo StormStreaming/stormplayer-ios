@@ -10,6 +10,8 @@ import StormLibrary
 
 public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormLibraryObserver{
     
+    let HIDE_GUI_DELAY = 2.5
+    
     let stormPlayer : StormPlayer
     
     @Published var isGuiVisible = true
@@ -41,6 +43,11 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     @Published var seekBarIsSliding = false{
         didSet{
             print("Is sliding: \(seekBarIsSliding)")
+            if seekBarIsSliding{
+                cancelHideGuiTimer()
+            }else{
+                startHideGuiTimer()
+            }
             /*
              
              BLOKUJEMY UPDATE SLIDERA Z EVENTU LIBRARKI
@@ -58,13 +65,23 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
         stormPlayer.addObserver(self)
         stormPlayer.stormLibrary.addObserver(self)
         
-        qualitiesList.append("1080p")
-        qualitiesList.append("4k")
-        selectedQualityLabel = "4k"
+        refreshQualityList()
+    
     }
     
     @objc public func hideGui(){
         isGuiVisible = false
+    }
+    
+    private func refreshQualityList(){
+        var list : [String] = []
+        for (_, stormMediaItem) in stormPlayer.stormLibrary.stormMediaItems.enumerated(){
+            list.append(stormMediaItem.label)
+            if stormMediaItem.isSelected{
+                selectedQualityLabel = stormMediaItem.label
+            }
+        }
+        qualitiesList = list
     }
     
     private func startHideGuiTimer(){
@@ -72,12 +89,15 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
             return;
         }
         timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(hideGui), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: HIDE_GUI_DELAY, target: self, selector: #selector(hideGui), userInfo: nil, repeats: false)
     }
     
     private func cancelHideGuiTimer(){
         timer.invalidate()
     }
+    
+    
+    //Library Events
     
     public func onVideoPlay() {
         isPlaying = true
@@ -92,6 +112,20 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     public func onVideoStop() {
         isPlaying = false
     }
+    
+    public func onStormMediaItemAdded(stormMediaItem: StormMediaItem) {
+        refreshQualityList()
+    }
+    
+    public func onStormMediaItemRemoved(stormMediaItem: StormMediaItem) {
+        refreshQualityList()
+    }
+    
+    public func onStormMediaItemSelect(stormMediaItem: StormMediaItem) {
+        refreshQualityList()
+    }
+    
+    //Player Events
     
     public func onVideoClicked(){
         isGuiVisible = true
