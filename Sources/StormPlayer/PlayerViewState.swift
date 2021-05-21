@@ -8,7 +8,7 @@
 import SwiftUI
 import StormLibrary
 
-public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibraryObserver{
+public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormLibraryObserver{
     
     let stormPlayer : StormPlayer
     
@@ -16,6 +16,40 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibrar
     @Published var isFullscreenMode = false
     @Published var error : String?
     @Published var isPlaying = false
+    @Published var isQualityButtonVisible = false
+    @Published var isQualityListVisible = false {
+        didSet{
+            if isQualityListVisible{
+                cancelHideGuiTimer()
+            }else{
+                startHideGuiTimer()
+            }
+        }
+    }
+    @Published var selectedQualityLabel : String?
+    @Published var qualitiesList : [String] = [] {
+        didSet{
+            if qualitiesList.count <= 1{
+                isQualityListVisible = false
+                isQualityButtonVisible = false
+            }else{
+                isQualityButtonVisible = true
+            }
+        }
+    }
+    
+    @Published var seekBarIsSliding = false{
+        didSet{
+            print("Is sliding: \(seekBarIsSliding)")
+            /*
+             
+             BLOKUJEMY UPDATE SLIDERA Z EVENTU LIBRARKI
+             
+             */
+        }
+    }
+    @Published var seekBarValue : Float = 1
+    
     
     var timer = Timer()
     
@@ -23,6 +57,10 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibrar
         self.stormPlayer = stormPlayer
         stormPlayer.addObserver(self)
         stormPlayer.stormLibrary.addObserver(self)
+        
+        qualitiesList.append("1080p")
+        qualitiesList.append("4k")
+        selectedQualityLabel = "4k"
     }
     
     @objc public func hideGui(){
@@ -30,6 +68,9 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibrar
     }
     
     private func startHideGuiTimer(){
+        if !isPlaying{
+            return;
+        }
         timer.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(hideGui), userInfo: nil, repeats: false)
     }
@@ -40,19 +81,16 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibrar
     
     public func onVideoPlay() {
         isPlaying = true
-        print("onVideoPlay")
         startHideGuiTimer()
     }
     
     public func onVideoPause() {
         isPlaying = false
-        print("onVideoPause")
         cancelHideGuiTimer()
     }
     
     public func onVideoStop() {
         isPlaying = false
-        print("onVideoStop")
     }
     
     public func onVideoClicked(){
@@ -73,11 +111,20 @@ public class PlayerViewState : ObservableObject, PlayerViewObserver, StormLibrar
     }
     
     public func onEnterFullscreenClicked() {
-        print("odpalilem enter")
         isFullscreenMode = true
     }
     
     public func onExitFullscreenClicked() {
         isFullscreenMode = false
+    }
+    
+    public func onQualitySelect(_ quality : String) {
+        selectedQualityLabel = quality
+        isQualityListVisible = false
+    }
+    
+    public func onSeekBarSetValue(_ value: Float) {
+        seekBarValue = value
+        print("value: \(seekBarValue)")
     }
 }

@@ -13,8 +13,6 @@ struct ControlsView : View{
     
     @EnvironmentObject var playerViewState: PlayerViewState
     
-    let playPauseString = NSLocalizedString("playpause", bundle: .module, comment: "x")
-    
     @State var seekPos : Float = 0
 
     var body: some View {
@@ -29,8 +27,11 @@ struct ControlsView : View{
         VStack{
 
             Spacer()
-            PlaybackButtonView()
-            Spacer()
+
+            if playerViewState.isQualityListVisible{
+                QualitySelectView().padding(.top, 80)
+            }
+            
             if playerViewState.error == nil && playerViewState.isGuiVisible{
                 VStack{
                 
@@ -41,11 +42,17 @@ struct ControlsView : View{
                 
                     HStack{
                         Spacer()
+                        
+                        if playerViewState.isQualityButtonVisible{
+                            QualityButtonView()
+                            .padding(.trailing, 10)
+                        }
+                        
                         FullScreenButtonView()
                         .padding(.trailing, 20)
                     }
                 
-                    ProgressBarView(value: $seekPos).padding(20)
+                    SeekBarView().padding(20)
                 }
             }
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)

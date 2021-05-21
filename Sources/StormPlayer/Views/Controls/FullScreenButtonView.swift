@@ -21,6 +21,8 @@ public struct FullScreenButtonView : View{
             }
 
         }) {            Image(playerViewState.isFullscreenMode ? "ExitFullscreen" : "EnterFullscreen", bundle: .module)
+            .resizable()
+            .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         }
         
     }

@@ -16,11 +16,13 @@ public class StormPlayer{
     private var observations = [ObjectIdentifier : Observation]()
     
     public var playerViewState : PlayerViewState?
+    public var seekBarCalculations : SeekBarCalculations?
     
     public init(stormLibrary: StormLibrary){
         self.stormLibrary = stormLibrary
         self.libraryController = LibraryController(stormPlayer: self)
         self.playerViewState = PlayerViewState(stormPlayer: self);
+        self.seekBarCalculations = SeekBarCalculations(stormPlayer: self);
 
     }
     
@@ -32,12 +34,12 @@ public class StormPlayer{
         dispatchEvent(.onExitFullscreenClicked)
     }
    
-    public func addObserver(_ observer: PlayerViewObserver){
+    public func addObserver(_ observer: StormPlayerViewObserver){
         let id = ObjectIdentifier(observer)
         observations[id] = Observation(observer: observer)
     }
     
-    public func removeObserver(_ observer: PlayerViewObserver){
+    public func removeObserver(_ observer: StormPlayerViewObserver){
         let id = ObjectIdentifier(observer)
         observations.removeValue(forKey: id)
     }
@@ -61,14 +63,16 @@ public class StormPlayer{
                     observer.onExitFullscreenClicked()
                 case .onVideoClicked:
                     observer.onVideoClicked()
-                case .testWithObject:
-                    observer.testWithObject((object as? String)!)
+                case .onQualitySelect:
+                    observer.onQualitySelect((object as? String)!)
+                case .onSeekBarSetValue:
+                    observer.onSeekBarSetValue((object as? Float)!)
             }
         }
     }
     
     public struct Observation {
-        weak var observer: PlayerViewObserver?
+        weak var observer: StormPlayerViewObserver?
     }
     
 }

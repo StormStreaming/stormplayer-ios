@@ -20,7 +20,8 @@ let package = Package(
     targets: [
         .target(
             name: "StormPlayer",
-            dependencies: ["StormLibrary"]
+            dependencies: ["StormLibrary"],
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "StormPlayerTests",

@@ -5,22 +5,24 @@
 //  Created by Sebastian Ceglarz on 18/05/2021.
 //
 
-public protocol PlayerViewObserver: AnyObject {
+public protocol StormPlayerViewObserver: AnyObject {
     func onPlayClicked()
     func onPauseClicked()
     func onEnterFullscreenClicked()
     func onExitFullscreenClicked()
     func onVideoClicked()
-    func testWithObject(_ t : String)
+    func onQualitySelect(_ quality : String)
+    func onSeekBarSetValue(_ value : Float)
 }
 
-public extension PlayerViewObserver {
+public extension StormPlayerViewObserver {
     func onPlayClicked() {}
     func onPauseClicked() {}
     func onEnterFullscreenClicked() {}
     func onExitFullscreenClicked() {}
     func onVideoClicked() {}
-    func testWithObject(_ t : String) {}
+    func onQualitySelect(_ quality : String) {}
+    func onSeekBarSetValue(_ value : Float) {}
 }
 
 public extension StormPlayer{
@@ -30,6 +32,7 @@ public extension StormPlayer{
         case onEnterFullscreenClicked
         case onExitFullscreenClicked
         case onVideoClicked
-        case testWithObject
+        case onQualitySelect
+        case onSeekBarSetValue
     }
 }

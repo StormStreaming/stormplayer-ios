@@ -8,16 +8,17 @@
 import SwiftUI
 
 
-struct ProgressBarView : UIViewRepresentable{
+struct SeekBarView : UIViewRepresentable{
     
-    func makeCoordinator() -> ProgressBarView.Coordinator {
-        return ProgressBarView.Coordinator(parent1: self)
+    func makeCoordinator() -> SeekBarView.Coordinator {
+        return SeekBarView.Coordinator(parent1: self)
     }
     
-    @Binding var value : Float
+    @EnvironmentObject var playerViewState: PlayerViewState
+    
     let stormSlider = StormUISliderView()
     
-    func makeUIView(context: UIViewRepresentableContext<ProgressBarView>) -> UISlider {
+    func makeUIView(context: UIViewRepresentableContext<SeekBarView>) -> UISlider {
         
     
         stormSlider.minimumTrackTintColor = UIColor(Color("StormOrange", bundle: .module))
@@ -26,7 +27,7 @@ struct ProgressBarView : UIViewRepresentable{
         //stormSlider.thumbTintColor = UIColor(Color("StormOrange", bundle: .module))
 
         //slider.setThumbImage(UIImage(named: "thumb"), for: .normal)
-        stormSlider.value = value
+        stormSlider.value = playerViewState.seekBarValue
         stormSlider.addTarget(context.coordinator, action: #selector(context.coordinator.changed(slider:)), for: .valueChanged)
         
         stormSlider.addTarget(context.coordinator, action: #selector(context.coordinator.sliderDidEndSliding(slider:)), for: [.touchUpInside, .touchUpOutside])
@@ -34,36 +35,45 @@ struct ProgressBarView : UIViewRepresentable{
         return stormSlider
     }
     
-    func updateUIView(_ uiView: UISlider, context: UIViewRepresentableContext<ProgressBarView>) {
+    func updateUIView(_ uiView: UISlider, context: UIViewRepresentableContext<SeekBarView>) {
         
-        uiView.value = value
+        uiView.value = playerViewState.seekBarValue
     }
     
     class Coordinator : NSObject{
         
-        var parent : ProgressBarView
+        let liveString = NSLocalizedString("live", bundle: .module, comment: "x")
         
-        init(parent1 : ProgressBarView) {
+        var parent : SeekBarView
+        
+        init(parent1 : SeekBarView) {
             
             parent = parent1
         }
         
         @objc func changed(slider : StormUISliderView){
-            print("value: \(slider.value)")
             
+            if !parent.playerViewState.seekBarIsSliding{
+                parent.playerViewState.seekBarIsSliding = true
+            }
+
             slider.showTooltip()
 
             if slider.value > 0.97{
                 slider.value = 1
-                slider.setToolTipValue(value: "LIVE")
+                slider.setToolTipValue(value: liveString)
             }else{
-                slider.setToolTipValue(value: "00:00")
+                slider.setToolTipValue(value: parent.playerViewState.stormPlayer.seekBarCalculations!.valueToTime(slider.value))
             }
             
+
         }
         
         @objc func sliderDidEndSliding(slider : StormUISliderView) {
             slider.hideTooltip()
+            parent.playerViewState.seekBarIsSliding = false
+            parent.playerViewState.stormPlayer.dispatchEvent(.onSeekBarSetValue, object: slider.value)
+            
         }
     }
     
