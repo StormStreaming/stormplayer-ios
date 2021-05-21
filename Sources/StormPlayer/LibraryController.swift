@@ -21,7 +21,7 @@ class LibraryController : StormPlayerViewObserver{
         do{
             try stormPlayer.stormLibrary.play()
         } catch let error {
-            os_log("StormPlayer error: %@", log: .default, type: .error, String(describing: error))
+            os_log("Play error: %@", log: .stormPlayer, type: .error, String(describing: error))
         }
     }
     
@@ -29,7 +29,12 @@ class LibraryController : StormPlayerViewObserver{
         stormPlayer.stormLibrary.pause()
     }
     
-    public func testWithObject(_ t: String) {
-        print("cntr: oho, otrzymalem wiadomosc: \(t)")
+    public func onQualitySelect(_ quality: String) {
+        for(_, item) in stormPlayer.stormLibrary.stormMediaItems.enumerated(){
+            if item.label == quality{
+                stormPlayer.stormLibrary.selectStormMediaItem(stormMediaItem: item, play: true)
+                break;
+            }
+        }
     }
 }

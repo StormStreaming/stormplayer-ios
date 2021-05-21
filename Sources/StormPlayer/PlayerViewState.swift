@@ -123,13 +123,19 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     
     public func onStormMediaItemSelect(stormMediaItem: StormMediaItem) {
         refreshQualityList()
+        selectedQualityLabel = stormMediaItem.label
+        isQualityListVisible = false
     }
     
     //Player Events
     
     public func onVideoClicked(){
-        isGuiVisible = true
-        startHideGuiTimer()
+        if !isGuiVisible{
+            isGuiVisible = true
+            startHideGuiTimer()
+        }else{
+            isGuiVisible = false
+        }
     }
     
     public func onPlayClicked(){
@@ -152,10 +158,6 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
         isFullscreenMode = false
     }
     
-    public func onQualitySelect(_ quality : String) {
-        selectedQualityLabel = quality
-        isQualityListVisible = false
-    }
     
     public func onSeekBarSetValue(_ value: Float) {
         seekBarValue = value

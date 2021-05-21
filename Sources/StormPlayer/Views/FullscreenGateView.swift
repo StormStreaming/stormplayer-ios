@@ -17,7 +17,7 @@ struct FullscreenGateView : View{
 
         
         ZStack(alignment: .bottom){
-            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.avPlayer).onTapGesture {
+            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.getAvPlayer()).onTapGesture {
                 playerViewState.stormPlayer.dispatchEvent(.onVideoClicked)
             }
             
@@ -28,11 +28,11 @@ struct FullscreenGateView : View{
                 }
             }
         }.fullScreenCover(isPresented: playerViewState.isFullscreenMode ? .constant(true) : .constant(false)){
-            FullscreenView()
+            FullscreenView().environmentObject(playerViewState)
         }
-        
-    }
+            }
     
+
 }
 
 struct FullscreenView: View {
@@ -41,7 +41,7 @@ struct FullscreenView: View {
     
     var body: some View {
         ZStack(alignment: .bottom){
-            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.avPlayer).onTapGesture {
+            AVPlayerView(player: playerViewState.stormPlayer.stormLibrary.getAvPlayer()).onTapGesture {
                 playerViewState.stormPlayer.dispatchEvent(.onVideoClicked)
             }
             
