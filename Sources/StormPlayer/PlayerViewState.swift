@@ -15,6 +15,7 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     let stormPlayer : StormPlayer
     
     @Published var isGuiVisible = true
+    @Published var isLoaderVisible = true
     @Published var isFullscreenMode = false
     @Published var error : String?
     @Published var isPlaying = false

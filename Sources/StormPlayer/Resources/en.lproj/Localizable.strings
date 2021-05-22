@@ -1,1 +1,6 @@
 "live" = "LIVE";
+"videoStopText" = "The stream has ended";
+"videoNotFoundText" = "Stream was not found";
+"incompatiblePlayerProtocolText" = "This StormCore version is not compatible with the provided streaming server";
+"connectionErrorText" = "An error occurred - check your internet connection";
+"errorOccured" = "An error occurred - try again later";

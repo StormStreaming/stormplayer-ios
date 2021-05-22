@@ -15,15 +15,18 @@ public class StormPlayer{
     private var libraryController : LibraryController?
     private var observations = [ObjectIdentifier : Observation]()
     
-    public var playerViewState : PlayerViewState?
-    public var seekBarCalculations : SeekBarCalculations?
+    public var playerViewState : PlayerViewState!
+    public var seekBarCalculations : SeekBarCalculations!
+    public var errorDispatcher : ErrorDispatcher!
+    public var loaderDispatcher : LoaderDispatcher!
     
     public init(stormLibrary: StormLibrary){
         self.stormLibrary = stormLibrary
         self.libraryController = LibraryController(stormPlayer: self)
         self.playerViewState = PlayerViewState(stormPlayer: self);
         self.seekBarCalculations = SeekBarCalculations(stormPlayer: self);
-
+        self.errorDispatcher = ErrorDispatcher(stormPlayer: self)
+        self.loaderDispatcher = LoaderDispatcher(stormPlayer: self)
     }
     
     public func enterFullscreen(){
@@ -55,18 +58,28 @@ public class StormPlayer{
             switch eventType {
                 case .onPlayClicked:
                     observer.onPlayClicked()
+                    break
                 case .onPauseClicked:
                     observer.onPauseClicked()
+                    break
                 case .onEnterFullscreenClicked:
                     observer.onEnterFullscreenClicked()
+                    break
                 case .onExitFullscreenClicked:
                     observer.onExitFullscreenClicked()
+                    break
                 case .onVideoClicked:
                     observer.onVideoClicked()
+                    break
                 case .onQualitySelect:
                     observer.onQualitySelect((object as? String)!)
+                    break
                 case .onSeekBarSetValue:
                     observer.onSeekBarSetValue((object as? Float)!)
+                    break
+                case .onErrorScreenShow:
+                    observer.onErrorScreenShow()
+                    break
             }
         }
     }

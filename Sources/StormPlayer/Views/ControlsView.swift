@@ -17,13 +17,6 @@ struct ControlsView : View{
 
     var body: some View {
         
-        /*
-         Error Screen
-         */
-        if playerViewState.error != nil{
-            Text("Error: \(playerViewState.error!)").foregroundColor(.white)
-        }
-        
         VStack{
 
             Spacer()
