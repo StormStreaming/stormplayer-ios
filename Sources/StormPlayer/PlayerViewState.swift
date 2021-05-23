@@ -101,6 +101,7 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     }
     
     public func onVideoPause() {
+        isGuiVisible = true
         isPlaying = false
         cancelHideGuiTimer()
     }
