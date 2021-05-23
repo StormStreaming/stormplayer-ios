@@ -17,6 +17,19 @@ public class ErrorDispatcher : StormLibraryObserver{
         self.stormPlayer.stormLibrary.addObserver(self)
     }
     
+    public func onVideoConnecting() {
+        stormPlayer.playerViewState.error = nil
+    }
+    
+    public func onGatewayConnecting() {
+        stormPlayer.playerViewState.error = nil
+    }
+    
+    public func onStormMediaItemAdded(stormMediaItem: StormMediaItem) {
+        stormPlayer.playerViewState.error = nil
+    }
+    
+    
     public func onVideoStop() {
         stormPlayer.playerViewState.error = NSLocalizedString("videoStopText", bundle: .module, comment: "x")
     }
@@ -40,6 +53,10 @@ public class ErrorDispatcher : StormLibraryObserver{
     public func onGatewayConnectionError() {
         stormPlayer.playerViewState.error = NSLocalizedString("errorOccured", bundle: .module, comment: "x")
     }
+    
+    /*
+     dodac reszte wg android
+     */
     
     
 }

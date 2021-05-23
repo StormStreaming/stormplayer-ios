@@ -1,6 +1,5 @@
 //
 //  ProgressBarView.swift
-//  MyThirdApp
 //
 //  Created by Sebastian Ceglarz on 17/05/2021.
 //
@@ -24,9 +23,6 @@ struct SeekBarView : UIViewRepresentable{
         stormSlider.minimumTrackTintColor = UIColor(Color("StormOrange", bundle: .module))
         stormSlider.maximumTrackTintColor = UIColor(Color("StormProgressBarInactive", bundle: .module))
 
-        //stormSlider.thumbTintColor = UIColor(Color("StormOrange", bundle: .module))
-
-        //slider.setThumbImage(UIImage(named: "thumb"), for: .normal)
         stormSlider.value = playerViewState.seekBarValue
         stormSlider.addTarget(context.coordinator, action: #selector(context.coordinator.changed(slider:)), for: .valueChanged)
         
@@ -41,9 +37,7 @@ struct SeekBarView : UIViewRepresentable{
     }
     
     class Coordinator : NSObject{
-        
-        let liveString = NSLocalizedString("live", bundle: .module, comment: "x")
-        
+
         var parent : SeekBarView
         
         init(parent1 : SeekBarView) {
@@ -61,10 +55,10 @@ struct SeekBarView : UIViewRepresentable{
 
             if slider.value > 0.97{
                 slider.value = 1
-                slider.setToolTipValue(value: liveString)
-            }else{
-                slider.setToolTipValue(value: parent.playerViewState.stormPlayer.seekBarCalculations!.valueToTime(slider.value))
             }
+            
+            slider.setToolTipValue(value: parent.playerViewState.stormPlayer.seekBarCalculations!.valueToStringTime(slider.value))
+            
             
 
         }

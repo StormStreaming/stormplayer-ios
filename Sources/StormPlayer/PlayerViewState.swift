@@ -16,6 +16,7 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     
     @Published var isGuiVisible = true
     @Published var isLoaderVisible = true
+    @Published var isSeekBarVisible = false
     @Published var isFullscreenMode = false
     @Published var error : String?
     @Published var isPlaying = false
@@ -43,17 +44,11 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     
     @Published var seekBarIsSliding = false{
         didSet{
-            print("Is sliding: \(seekBarIsSliding)")
             if seekBarIsSliding{
                 cancelHideGuiTimer()
             }else{
                 startHideGuiTimer()
             }
-            /*
-             
-             BLOKUJEMY UPDATE SLIDERA Z EVENTU LIBRARKI
-             
-             */
         }
     }
     @Published var seekBarValue : Float = 1

@@ -13,6 +13,7 @@ public protocol StormPlayerViewObserver: AnyObject {
     func onVideoClicked()
     func onQualitySelect(_ quality : String)
     func onSeekBarSetValue(_ value : Float)
+    func onSeekBarSetTime(_ seekTime : Int64)
     func onErrorScreenShow()
 
 }
@@ -25,6 +26,7 @@ public extension StormPlayerViewObserver {
     func onVideoClicked() {}
     func onQualitySelect(_ quality : String) {}
     func onSeekBarSetValue(_ value : Float) {}
+    func onSeekBarSetTime(_ seekTime : Int64){}
     func onErrorScreenShow(){}
 }
 
@@ -38,5 +40,6 @@ public extension StormPlayer{
         case onQualitySelect
         case onSeekBarSetValue
         case onErrorScreenShow
+        case onSeekBarSetTime
     }
 }

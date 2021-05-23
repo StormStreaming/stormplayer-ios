@@ -80,6 +80,9 @@ public class StormPlayer{
                 case .onErrorScreenShow:
                     observer.onErrorScreenShow()
                     break
+                case .onSeekBarSetTime:
+                    observer.onSeekBarSetTime((object as? Int64)!)
+                    break
             }
         }
     }

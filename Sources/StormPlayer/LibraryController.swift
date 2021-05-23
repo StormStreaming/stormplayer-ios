@@ -32,9 +32,17 @@ class LibraryController : StormPlayerViewObserver{
     public func onQualitySelect(_ quality: String) {
         for(_, item) in stormPlayer.stormLibrary.stormMediaItems.enumerated(){
             if item.label == quality{
-                stormPlayer.stormLibrary.selectStormMediaItem(stormMediaItem: item, play: true)
+                stormPlayer.stormLibrary.selectStormMediaItem(stormMediaItem: item, play: true, resetSeekPosition: false)
                 break;
             }
+        }
+    }
+    
+    func onSeekBarSetTime(_ seekTime: Int64) {
+        do{
+            try stormPlayer.stormLibrary.seekTo(seekTime: seekTime)
+        } catch let error {
+            os_log("SeekTo error: %@", log: .stormPlayer, type: .error, String(describing: error))
         }
     }
 }

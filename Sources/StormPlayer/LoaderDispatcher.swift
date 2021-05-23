@@ -39,4 +39,16 @@ public class LoaderDispatcher : StormLibraryObserver, StormPlayerViewObserver{
         self.stormPlayer.playerViewState.isLoaderVisible = false
     }
     
+    
+    public func onGatewayConnectionError() {
+        self.stormPlayer.playerViewState.isLoaderVisible = false
+    }
+    
+    public func onGatewayGroupNameNotFound() {
+        self.stormPlayer.playerViewState.isLoaderVisible = false
+    }
+    
+    public func onGatewayMediaItems(stormMediaItems: [StormMediaItem]) {
+        self.stormPlayer.playerViewState.isLoaderVisible = false
+    }
 }

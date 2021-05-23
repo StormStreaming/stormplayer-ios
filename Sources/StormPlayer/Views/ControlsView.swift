@@ -1,6 +1,5 @@
 //
 //  StormPlayerControlsView.swift
-//  MyThirdApp
 //
 //  Created by Sebastian Ceglarz on 10/05/2021.
 //
@@ -27,12 +26,6 @@ struct ControlsView : View{
             
             if playerViewState.error == nil && playerViewState.isGuiVisible{
                 VStack{
-                
-                /*
-                 OBRAZEK! :D
-                 */
-                //Image("TestImage", bundle: .module)
-                
                     HStack{
                         Spacer()
                         
@@ -44,11 +37,14 @@ struct ControlsView : View{
                         FullScreenButtonView()
                         .padding(.trailing, 20)
                     }
-                
-                    SeekBarView().padding(20)
+                    .padding(.bottom, playerViewState.isSeekBarVisible ? 0 : 20)
+                    if playerViewState.isSeekBarVisible{
+                        SeekBarView().padding(20)
+                    }
                 }
             }
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+        }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             
    
         
