@@ -12,7 +12,7 @@ public class StormPlayer{
     
     public let stormLibrary : StormLibrary
     
-    private var libraryController : LibraryController?
+    private var libraryController : LibraryController!
     private var observations = [ObjectIdentifier : Observation]()
     
     public var playerViewState : PlayerViewState!

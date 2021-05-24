@@ -64,7 +64,9 @@ struct PlayerView : View{
                     
                     ZStack{
                         if playerViewState.isGuiVisible{
-                            PlaybackButtonView()
+                            if !playerViewState.isLoaderVisible{
+                                PlaybackButtonView()
+                            }
                             ControlsView()
                         }
                     }
