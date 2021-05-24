@@ -27,6 +27,7 @@ public class StormPlayer{
         self.seekBarCalculations = SeekBarCalculations(stormPlayer: self);
         self.errorDispatcher = ErrorDispatcher(stormPlayer: self)
         self.loaderDispatcher = LoaderDispatcher(stormPlayer: self)
+
     }
     
     public func enterFullscreen(){

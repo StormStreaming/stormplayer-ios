@@ -49,14 +49,10 @@ public class ErrorDispatcher : StormLibraryObserver{
     public func onGatewayGroupNameNotFound() {
         stormPlayer.playerViewState.error = NSLocalizedString("videoNotFoundText", bundle: .module, comment: "x")
     }
-    
-    public func onGatewayConnectionError() {
-        stormPlayer.playerViewState.error = NSLocalizedString("errorOccured", bundle: .module, comment: "x")
+        public func onGatewayConnectionError(error : Error) {
+        stormPlayer.playerViewState.error = NSLocalizedString("connectionErrorText", bundle: .module, comment: "x")
     }
-    
-    /*
-     dodac reszte wg android
-     */
     
     
 }
+
