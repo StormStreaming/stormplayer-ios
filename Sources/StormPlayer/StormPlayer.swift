@@ -79,7 +79,10 @@ public class StormPlayer{
                     observer.onSeekBarSetValue((object as? Float)!)
                     break
                 case .onErrorScreenShow:
-                    observer.onErrorScreenShow()
+                    observer.onErrorScreenShow((object as? String)!)
+                    break
+                case .onErrorScreenHide:
+                    observer.onErrorScreenHide()
                     break
                 case .onSeekBarSetTime:
                     observer.onSeekBarSetTime((object as? Int64)!)

@@ -18,7 +18,15 @@ public class PlayerViewState : ObservableObject, StormPlayerViewObserver, StormL
     @Published var isLoaderVisible = false
     @Published var isSeekBarVisible = false
     @Published var isFullscreenMode = false
-    @Published var error : String?
+    @Published var error : String?{
+        didSet{
+            if error != nil{
+                stormPlayer.dispatchEvent(.onErrorScreenShow, object: error!)
+            }else{
+                stormPlayer.dispatchEvent(.onErrorScreenHide)
+            }
+        }
+    }
     @Published var isPlaying = false
     @Published var isQualityButtonVisible = false
     @Published var isQualityListVisible = false {
