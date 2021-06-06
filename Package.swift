@@ -15,7 +15,7 @@ let package = Package(
             targets: ["StormPlayer"]),
     ],
     dependencies: [
-        //.package(name: "StormLibrary", url: "file:///Volumes/PROJEKTY/XCODE/StormLibrary", from: "1.0.0"),
+       // .package(name: "StormLibrary", url: "file:///Volumes/PROJEKTY/XCODE/StormLibrary", from: "1.0.0"),
         .package(name: "StormLibrary", url: "https://github.com/StormStreaming/stormlibrary-ios", from: "1.0.0"),
         
     ],

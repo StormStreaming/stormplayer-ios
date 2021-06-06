@@ -21,7 +21,7 @@ public struct PlaybackButtonView : View{
             }        }) {
             Image(!playerViewState.isPlaying ? "Play" : "Pause", bundle: .module)
                 .resizable()
-                .frame(width: 100, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 72, height: 72, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
 
         }
         
