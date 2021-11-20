@@ -9,7 +9,7 @@ import SwiftUI
 
 class StormUISliderView : UISlider {
     
-    private var toolTip: ToolTipPopupView?
+    private var stormToolTip: ToolTipPopupView?
     private var point: UIView?
     
     @IBInspectable var thumbRadius: CGFloat = 20
@@ -38,15 +38,15 @@ class StormUISliderView : UISlider {
     }
     
     public func setToolTipValue(value : String){
-        toolTip?.setValue(value: value)
+        stormToolTip?.setValue(value: value)
     }
     
     public func showTooltip(){
-        toolTip?.isHidden = false
+        stormToolTip?.isHidden = false
     }
     
     public func hideTooltip(){
-        toolTip?.isHidden = true
+        stormToolTip?.isHidden = true
     }
     
     
@@ -69,7 +69,7 @@ class StormUISliderView : UISlider {
 
         let popupRect = CGRect(x: knobRect.origin.x, y: knobRect.origin.y-30, width: 10, height: 10)
 
-        toolTip?.frame = CGRect(x: popupRect.origin.x-16, y: popupRect.origin.y, width: 54, height: 25)
+        stormToolTip?.frame = CGRect(x: popupRect.origin.x-16, y: popupRect.origin.y, width: 54, height: 25)
         
         
         return knobRect
@@ -106,15 +106,15 @@ class StormUISliderView : UISlider {
 
     private func initToolTip() {
         
-        toolTip = ToolTipPopupView.init(frame: CGRect.zero)
-        toolTip?.backgroundColor = UIColor(Color("StormProgressBarTooltipBg", bundle: .module))
-        toolTip?.draw(CGRect.zero)
+        stormToolTip = ToolTipPopupView.init(frame: CGRect.zero)
+        stormToolTip?.backgroundColor = UIColor(Color("StormProgressBarTooltipBg", bundle: .module))
+        stormToolTip?.draw(CGRect.zero)
 
-        toolTip?.layer.cornerRadius = 10
-        toolTip?.clipsToBounds = true
-        self.addSubview(toolTip!)
+        stormToolTip?.layer.cornerRadius = 10
+        stormToolTip?.clipsToBounds = true
+        self.addSubview(stormToolTip!)
   
-        toolTip?.isHidden = true
+        stormToolTip?.isHidden = true
         
     }
     
